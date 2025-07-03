@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        #quiz-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        #question {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .option {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        #submit, #restart {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        #submit:hover, #restart:hover {
+            background-color: #1e40af;
+        }
+        #result {
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        #incorrect {
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+        .incorrect-item {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h2 id="question"></h2>
+        <form id="options"></form>
+        <button id="submit" type="button">Submit</button>
+        <button id="restart" type="button" style="display: none;">Restart Quiz</button>
+        <div id="result"></div>
+        <div id="incorrect"></div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "Which of the following is not a core feature of Node.js?",
+                options: ["Asynchronous I/O operations", "Server-side rendering", "Event-driven architecture", "Multi-threaded execution"],
+                answer: 3
+            },
+            {
+                question: "In which programming language is Node.js primarily written for application code?",
+                options: ["Python", "Assembly", "JavaScript", "Java"],
+                answer: 2
+            },
+            {
+                question: "What is the package manager used in Node.js?",
+                options: ["npm", "pip", "Maven", "NuGet"],
+                answer: 0
+            },
+            {
+                question: "Which engine powers Node.js and Chrome to execute JavaScript code?",
+                options: ["V8 Engine", "SpiderMonkey", "Chakra", "Rhino"],
+                answer: 0
+            },
+            {
+                question: "Which of the following is NOT a typical use case for Node.js?",
+                options: ["Building real-time applications", "Server-side web development", "Machine learning algorithms", "Command-line tools"],
+                answer: 2
+            },
+            {
+                question: "What does the fs module in Node.js allow you to do?",
+                options: ["Interact with the internet and fetch data from URLs", "Manipulate and interact with the file system", "Create and manage databases", "Handle real-time data streams"],
+                answer: 1
+            },
+            {
+                question: "Which function is used to read the contents of a file using the fs module?",
+                options: ["fs.readSync()", "fs.readfile()", "fs.read()", "fs.readFile()"],
+                answer: 3
+            },
+            {
+                question: "What is the purpose of the fs.writeFile() function in Node.js?",
+                options: ["Reads content of a file", "Appends new data to a file", "Writes data to a file, replacing content", "Deletes a file"],
+                answer: 2
+            },
+            {
+                question: "Which method is used to delete a file using the fs module?",
+                options: ["fs.removeFile()", "fs.unlink()", "fs.deleteFile()", "fs.remove()"],
+                answer: 1
+            },
+            {
+                question: "Which method is used to append data to a file synchronously in Node.js?",
+                options: ["fs.appendFile()", "fs.writeFileSync()", "fs.appendFile()", "fs.appendFileSync()"],
+                answer: 3
+            },
+            {
+                question: "In Node.js, what is the purpose of module.exports?",
+                options: ["It is used to import modules from other files", "It is used to define the exports of a module", "It is used to load built-in Node.js modules", "It is used to enable strict mode"],
+                answer: 1
+            },
+            {
+                question: "How do you export a single function named add from a Node.js module using module.exports?",
+                options: ["module.exports = add", "export function add", "module.exports.add", "export.add = add"],
+                answer: 0
+            },
+            {
+                question: "Which approach allows you to export multiple values using exports and module.exports?",
+                options: ["Separating each value with semicolons inside module.exports", "Adding values to the exports object", "Assigning an array of values to module.exports", "Using multiple module.exports statements"],
+                answer: 2
+            },
+            {
+                question: "What is the primary advantage of using asynchronous operations in Node.js?",
+                options: ["Simpler to write than synchronous operations", "Prevent the event loop from executing other tasks", "Do not require error handling", "Provide better performance due to parallel execution"],
+                answer: 3
+            },
+            {
+                question: "What is npm in the context of Node.js?",
+                options: ["Native Programming Module", "Node Project Manager", "Node Package Manager", "New Project Maker"],
+                answer: 2
+            },
+            {
+                question: "What is the primary purpose of npm in a Node.js project?",
+                options: ["Manage version control", "Create virtual environments", "Install and manage packages", "Maintain project documentation"],
+                answer: 2
+            },
+            {
+                question: "How do you initialize a new npm project in the terminal?",
+                options: ["npm new", "npm create", "npm init", "npm start"],
+                answer: 2
+            },
+            {
+                question: "What is the primary purpose of the yargs package in Node.js?",
+                options: ["Create interactive command-line interfaces", "Handle and parse command-line arguments", "Manage dependencies", "Provide a templating engine"],
+                answer: 1
+            },
+            {
+                question: "How do you install the yargs package in a Node.js project?",
+                options: ["npm install yargs", "npm add yargs", "npm install yargs.js", "npm yargs install"],
+                answer: 0
+            },
+            {
+                question: "What does the yargs package allow you to do with command-line arguments?",
+                options: ["Provides a templating engine", "Creates interactive prompts", "Supports tab-completion", "Defines multiple options and flags"],
+                answer: 3
+            },
+            {
+                question: "What is the purpose of the process.argv property in Node.js?",
+                options: ["Access environment variables", "Access command-line arguments", "Retrieve current working directory", "Provide CPU and memory usage"],
+                answer: 1
+            },
+            {
+                question: "How are command-line arguments accessed using process.argv in Node.js?",
+                options: ["process.argv.arguments", "process.argv[0]", "process.argv.arguments[0]", "process.argv[2]"],
+                answer: 3
+            },
+            {
+                question: "In Node.js, what data type does process.argv return?",
+                options: ["An object", "An array", "A string", "A number"],
+                answer: 1
+            },
+            {
+                question: "When accessing command-line arguments with process.argv, what is the first element of the array?",
+                options: ["The Node.js path", "The script file path", "The number of arguments", "The arguments after the script path"],
+                answer: 0
+            },
+            {
+                question: "What does the command method in yargs allow you to do?",
+                options: ["Execute a JavaScript function", "Define a new command with options", "Set default values", "Display a help message"],
+                answer: 1
+            },
+            {
+                question: "What is the role of the builder property in the command method of yargs?",
+                options: ["Defines command-line arguments and options", "Specifies the command to execute", "Controls demand behavior", "Handles errors"],
+                answer: 0
+            },
+            {
+                question: "How can you make a command-line option required using yargs?",
+                options: ["Using the demand method", "Using demandOption: true", "Setting required to true", "Using requiredOption method"],
+                answer: 1
+            },
+            {
+                question: "What does JSON.stringify() do in Node.js?",
+                options: ["Parses a JSON string", "Converts an object to a JSON string", "Validates JSON data", "Reads a JSON file"],
+                answer: 1
+            },
+            {
+                question: "What does JSON.parse() do in Node.js?",
+                options: ["Converts an object to a JSON string", "Parses a JSON string to an object", "Formats a JSON file", "Validates JSON syntax"],
+                answer: 1
+            },
+            {
+                question: "Which module is used to handle file paths in Node.js?",
+                options: ["path", "fs", "url", "os"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let incorrectAnswers = [];
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById("question").textContent = q.question;
+            const optionsForm = document.getElementById("options");
+            optionsForm.innerHTML = "";
+            q.options.forEach((option, index) => {
+                const label = document.createElement("label");
+                label.className = "option";
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "answer";
+                radio.value = index;
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(` ${option}`));
+                optionsForm.appendChild(label);
+                optionsForm.appendChild(document.createElement("br"));
+            });
+            document.getElementById("submit").style.display = "block";
+            document.getElementById("restart").style.display = "none";
+            document.getElementById("result").textContent = "";
+            document.getElementById("incorrect").innerHTML = "";
+        }
+
+        document.getElementById("submit").addEventListener("click", () => {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Please select an answer");
+                return;
+            }
+            const answer = parseInt(selected.value);
+            if (answer === questions[currentQuestion].answer) {
+                score++;
+            } else {
+                incorrectAnswers.push({
+                    question: questions[currentQuestion].question,
+                    selectedAnswer: questions[currentQuestion].options[answer],
+                    correctAnswer: questions[currentQuestion].options[questions[currentQuestion].answer]
+                });
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("quiz-container").style.display = "none";
+                document.getElementById("result").textContent = `You scored ${score} out of ${questions.length}!`;
+                if (incorrectAnswers.length > 0) {
+                    const incorrectDiv = document.getElementById("incorrect");
+                    incorrectDiv.innerHTML = "<h3>Incorrect Answers:</h3>";
+                    incorrectAnswers.forEach((item, index) => {
+                        const p = document.createElement("p");
+                        p.className = "incorrect-item";
+                        p.textContent = `${index + 1}. ${item.question} - Your Answer: ${item.selectedAnswer} - Correct Answer: ${item.correctAnswer}`;
+                        incorrectDiv.appendChild(p);
+                    });
+                } else {
+                    document.getElementById("incorrect").textContent = "No incorrect answers!";
+                }
+                document.getElementById("restart").style.display = "block";
+            }
+        });
+
+        document.getElementById("restart").addEventListener("click", () => {
+            currentQuestion = 0;
+            score = 0;
+            incorrectAnswers = [];
+            document.getElementById("quiz-container").style.display = "block";
+            loadQuestion();
+        });
+
+        console.log(score)
+        loadQuestion();
+    </script>
+</body>
+</html>
