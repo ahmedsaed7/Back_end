@@ -22,9 +22,6 @@ yargs.command({
     },
 })
 
-
-
-
 yargs.command({
     command: "delete",
     describe: "the item is deleted ",
@@ -46,32 +43,42 @@ yargs.command({
     },
 })
 
+yargs.command({
+    command: "read",
+    describe: "to read data ",
+    builder:{
+        id:{
+            describe:"this is id desc in read command",
+            demandOption: true,
+            type: "String",
+        }
+    },
+    handler:(x)=> {
+            const item = data.readData(x.id);
+    }
+})
+
+yargs.command({
+    command: "listfrom",
+    describe: "to list All data from the id to the end  ",
+    builder:{
+        id:{
+            describe:"this is id desc in read command",
+            demandOption: true,
+            type: "String",
+        }
+    },
+    handler:()=> {
+        const ListData = data.ListDataFromID(x.id)
+    },
+})
+
+yargs.command({
+    command: "list",
+    describe: "to list All data ",
+    handler:()=> {
+        data.List()
+    },
+})
 
 yargs.parse()
-
-// /********************lec4****************************** */
-
-// yargs.command({
-//     command: "read",
-//     describe: "to read data ",
-//     builder:{
-//         id:{
-//             describe:"this is id desc in read command",
-//             demandOption: true,
-//             type: "String",
-//         }
-//     },
-//     handler:(x)=> {
-//         data3.readData(x.id)
-//     },
-// })
-
-// yargs.command({
-//     command: "list",
-//     describe: "to list data ",
-//     handler:()=> {
-//         data3.ListData()
-//     },
-// })
-
-// yargs.parse()

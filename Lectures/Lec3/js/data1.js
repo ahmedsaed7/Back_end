@@ -45,8 +45,46 @@ const getPersonById = (id)=>{
     return Person;
 }
 
+const readData = (id)=>{
+    const AllData = LoadData();
+    const  itemNeeded = AllData.find((item) => { 
+        return item.id  == id 
+    })
+
+    if(itemNeeded){
+        console.log(itemNeeded)
+    }else{
+        console.log(`Error the data with id ${id} is  not found `);
+    }
+}
+
+const ListDataFromID = (id)=>{
+    const AllData = LoadData();
+    const AllDataFromID = {}
+    for( let i = id ; i<AllData.length ;i++){
+        AllData.map((item) => {
+            return AllDataFromID.push(item.id == id )           
+        })
+    } 
+    if(AllDataFromID){
+        console.log(AllDataFromID)
+    }else{
+        console.log(`Error the data with id ${id} is  not found `);
+    }
+}
+
+const List = ()=>{
+    const AllData = LoadData();
+    AllData.forEach((item)=>{
+        console.log(`the id is ${item.id} ,first name is ${item.Fname} and the last name is ${item.Lname}`)
+    })
+}
+
 module.exports = {
     addPerson,
     DeletePerson,
-    getPersonById
+    getPersonById,
+    readData,
+    ListDataFromID,
+    List
 }
