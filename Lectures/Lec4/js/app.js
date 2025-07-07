@@ -15,7 +15,7 @@
         ---
 
         ## 1. Introduction to HTTP Requests in Node.js
-
+  
         Node.js allows you to make HTTP requests to external APIs to fetch or send data.
         In this lecture, we use the `request` module to interact with weather APIs (WeatherAPI and Weatherstack) to retrieve current weather data for specific locations.
         The APIs return JSON data, which we parse and use to display information like location names and weather conditions.
@@ -123,7 +123,7 @@
 
         // const request = require("request");
         // const url = "https://api.weatherapi.com/v1/current.json?key=7f97e74ef23b418c97a155211230503&q=egypt";
-        request({ url, json: true }, (error, response) => {
+        request({ url, json: true }, (error, response,body) => {
             console.log("**********************************EX3****************************************************");
             if (error) {
                 console.log("ERROR HAS OCCURRED"); // Network or request failure

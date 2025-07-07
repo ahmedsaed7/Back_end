@@ -228,7 +228,7 @@ yargs.command({
 yargs.parse();
 
 /** 
- * Run: node index.js create-user --username=John --email=john@example.com --age=25Output: User created: John, Age: 25, Email: john@example.com
+ * Run: node app.js create-user --username=John --email=john@example.com --age=25Output: User created: John, Age: 25, Email: john@example.com
  * 
  * Example 2: Reading and Updating JSON Data
  * 

@@ -1,10 +1,8 @@
 
 const request = require("request")
-
-
 const forecast = (latitude , longtitude , callback) => {
 
-    const url = "https://api.weatherapi.com/v1/current.json?key=7f97e74ef23b418c97a155211230503&q=" + latitude + "," + longtitude
+    const url = "https://api.weatherapi.com/v1/current.json?key=d1d0d967c4924903917123943243107&q=" + latitude + "," + longtitude
     
     request ({url , json : true  } , (error , response) => {
     
@@ -20,5 +18,5 @@ const forecast = (latitude , longtitude , callback) => {
     })
       }
 
-    module.exports = forecast
+ module.exports = forecast
 

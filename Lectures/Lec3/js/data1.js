@@ -61,7 +61,7 @@ const readData = (id)=>{
 const ListDataFromID = (id)=>{
     const AllData = LoadData();
     const AllDataFromID = {}
-    for( let i = id ; i<AllData.length ;i++){
+    for( let i = id ; i<=AllData.length ;i++){
         AllData.map((item) => {
             return AllDataFromID.push(item.id == id )           
         })
