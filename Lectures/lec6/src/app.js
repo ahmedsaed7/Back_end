@@ -12,10 +12,10 @@
  *  5- Serving Static Files
  *  6- Running the Server
  *  7- Additional Examples
- *  8- Notes and Best Practices
+ *  8- Notes and Bes t Practices
  * ************************************************************************************
  *
- *1. Introduction to Express:-
+ *1.Introduction to Express:-
  * 
  *  Express is a minimal and flexible Node.js web application framework that simplifies the process of building web servers and APIs.
  *  It provides robust features for handling HTTP requests, defining routes, and serving static content.
